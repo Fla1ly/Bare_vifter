@@ -263,9 +263,14 @@ footer i:hover {
     border-radius: 0;
     font-size: 13px;
     padding: 15px 40px;
+}
+
+/* Overgang */
+.transition {
     transition: all 0.3s;
 }
 
+/* Knapp */
 .btn-lg {
     padding: 25px 50px;
 }
@@ -275,6 +280,7 @@ footer i:hover {
 }
 
 .btn-primary {
+    /* Bakgrunn */
     background: transparent;
     border: 1px solid #ffffff;
     color: #ffffff;
@@ -284,13 +290,14 @@ footer i:hover {
 .btn-primary:active,
 .btn-primary:active:hover,
 .btn-primary:focus {
+    /* Bakgrunn ved hover, aktiv og fokus */
     background: #ffffff;
     color: #000000;
     border-color: #ffffff;
 }
 
 
-/* Products page */
+/* Produktside */
 
 .index-header {
     display: flex;
@@ -366,7 +373,7 @@ footer i:hover {
 }
 
 
-/* User */
+/* Bruker */
 
 .user-main-parent {
     width: 100%;
@@ -431,7 +438,7 @@ footer i:hover {
 }
 
 
-/* Login & registration */
+/* Innlogging og registrering */
 
 .container {
     height: 90vh;
@@ -559,7 +566,7 @@ form {
 }
 
 .line::before {
-    content: 'Or';
+    content: 'Eller';
     position: absolute;
     top: 50%;
     left: 50%;
@@ -623,7 +630,7 @@ a.google span {
 }
 
 
-/* product page */
+/* Produktside */
 
 .product {
     width: 100%;
@@ -701,7 +708,7 @@ a.google span {
 }
 
 
-/* Contact Page */
+/* Kontaktside */
 
 .contact-section {
     width: 100%;
@@ -875,7 +882,7 @@ a.google span {
 }
 
 
-/* cart page */
+/* Handlekurvside */
 
 .cart-container {
     width: 100%;

@@ -79,87 +79,69 @@
 </head>
 
 <body>
-<?php
-session_start();
+    <?php
+    session_start();
 
-if (isset($_POST['totalPrice']) && $_POST['totalPrice'] > 0) {
-    $totalPrice = $_POST['totalPrice'];
+    if (isset($_POST['totalPrice']) && $_POST['totalPrice'] > 0) {
+        $totalPrice = $_POST['totalPrice'];
 
-    /* if (!empty($_SESSION['cart'])) {
-        $server = "localhost";
-        $user = "root";
-        $pw = "Admin";
-        $db = "bare_vifter";
+        // Sjekker om handlekurven er tom
+        if (!empty($_SESSION['cart'])) {
+            $server = "localhost";
+            $user = "root";
+            $pw = "Admin";
+            $db = "bare_vifter";
 
-        $conn = new mysqli($server, $user, $pw, $db);
+            $conn = new mysqli($server, $user, $pw, $db);
 
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        $customerID = $_SESSION['user_id'];
-        $totalAmount = $totalPrice;
-        $insertOrderQuery = "INSERT INTO orders (CustomerID, TotalAmount) VALUES (?, ?)";
-        $stmt = $conn->prepare($insertOrderQuery);
-        $stmt->bind_param("ii", $customerID, $totalAmount);
-        $stmt->execute();
-
-        $orderID = $conn->insert_id;
-
-        foreach ($_SESSION['cart'] as $productName => $quantity) {
-            $productName = $conn->real_escape_string($productName);
-            $productIDQuery = "SELECT ProductID FROM products WHERE Name = ?";
-            $stmt = $conn->prepare($productIDQuery);
-            $stmt->bind_param("s", $productName);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $productID = $row['ProductID'];
-            } else {
-                continue;
+            if ($conn->connect_error) {
+                die("Kobling feilet: " . $conn->connect_error);
             }
 
-            $subtotal = $products[$productName]['price'] * $quantity;
+            $customerID = $_SESSION['user_id']; 
+            $totalAmount = $totalPrice; 
 
-            $insertOrderItemQuery = "INSERT INTO orderitems (OrderID, ProductID, Quantity, Subtotal) 
-                                     VALUES (?, ?, ?, ?)";
-            $stmt = $conn->prepare($insertOrderItemQuery);
-            $stmt->bind_param("iiid", $orderID, $productID, $quantity, $subtotal);
+            // Setter opp SQL-spørring for å legge til ordre i databasen
+            $insertOrderQuery = "INSERT INTO orders (CustomerID, TotalAmount) VALUES (?, ?)";
+            $stmt = $conn->prepare($insertOrderQuery);
+            $stmt->bind_param("id", $customerID, $totalAmount);
             $stmt->execute();
+
+            $orderID = $conn->insert_id; 
+
+            $stmt->close();
+            $conn->close();
         }
 
-        $stmt->close();
-        $conn->close();
+        echo '<h1>Kvittering for ditt kjøp</h1>';
+        echo '<h2>Takk for at du handlet hos oss!</h2>';
+        echo '<table>
+            <tr>
+                <th>Produkt</th>
+                <th>Antall</th>
+            </tr>';
+
+        // Går gjennom hvert produkt i handlekurven og vis det i tabellen
+        foreach ($_SESSION['cart'] as $productName => $quantity) {
+            echo '<tr>';
+            echo '<td>' . $productName . '</td>';
+            echo '<td>' . $quantity . '</td>';
+            echo '</tr>';
+        }
+
+        echo '</table>';
+        echo '<p class="total-price">Totalt pris: ' . $totalPrice . 'kr</p>';
+
+        // Tømmer handlekurven etter kjøpet
+        unset($_SESSION['cart']);
+
+        echo '<a href="produkter.php" class="buy-more-btn">Kjøp mer vifter</a>';
+    } else {
+        // Hvis totalprisen ikke er satt eller er mindre enn eller lik 0, sender brukeren tilbake til startsiden
+        header("Location: index.php");
+        exit;
     }
-    */
-    echo '<h1>Kvittering for ditt kjøp</h1>';
-    echo '<h2>Takk for at du handlet hos oss!</h2>';
-    echo '<table>
-        <tr>
-            <th>Produkt</th>
-            <th>Antall</th>
-        </tr>';
-
-    foreach ($_SESSION['cart'] as $productName => $quantity) {
-        echo '<tr>';
-        echo '<td>' . $productName . '</td>';
-        echo '<td>' . $quantity . '</td>';
-        echo '</tr>';
-    }
-
-    echo '</table>';
-    echo '<p class="total-price">Totalt pris: ' . $totalPrice . 'kr</p>';
-
-    unset($_SESSION['cart']);
-
-    echo '<a href="produkter.php" class="buy-more-btn">Kjøp mer vifter</a>';
-} else {
-    header("Location: index.php");
-    exit;
-}
-?>
+    ?>
 </body>
 
 </html>
