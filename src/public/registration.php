@@ -77,48 +77,48 @@
                         <i class='bx bx-hide eye-icon'></i>
                     </div>
                     <div class="form-link">
-                        <a href="#" class="forgot-pass">Forgot password?</a>
+                        <a href="#" class="forgot-pass">Glemt passord?</a>
                     </div>
                     <div class="field button-field">
                         <button>Login</button>
                     </div>
                 </form>
                 <div class="form-link">
-                    <span>Don't have an account? <a href="#" class="link signup-link">Signup</a></span>
+                    <span>Har du ikke konto? <a href="#" class="link signup-link">Registrer deg</a></span>
                 </div>
             </div>
             <div class="line"></div>
             <div class="media-options">
                 <a href="#" class="field facebook">
                     <i class='bx bxl-facebook facebook-icon'></i>
-                    <span>Login with Facebook</span>
+                    <span>Login med Facebook</span>
                 </a>
             </div>
             <div class="media-options">
                 <a href="#" class="field google">
                     <img src="images/google-img.png" alt="" class="google-img">
-                    <span>Login with Google</span>
+                    <span>Login med Google</span>
                 </a>
             </div>
         </div>
         <div class="form signup">
             <div class="form-content">
-                <header>Signup</header>
+                <header>Registrer konto</header>
                 <form action="register.php" method="post">
                     <div class="field input-field">
-                        <input type="text" name="firstName" placeholder="First Name:" class="firstName" required>
+                        <input type="text" name="firstName" placeholder="Navn:" class="firstName" required>
                     </div>
                     <div class="field input-field">
-                        <input type="text" name="lastName" placeholder="Last Name:" class="lastName" required>
+                        <input type="text" name="lastName" placeholder="Etternavn:" class="lastName" required>
                     </div>
                     <div class="field input-field">
                         <input type="email" name="email" placeholder="Email" class="input" required>
                     </div>
                     <div class="field input-field">
-                        <input type="password" name="password" placeholder="Create password" class="password" required>
+                        <input type="password" name="password" placeholder="Lag passord" class="password" required>
                     </div>
                     <div class="field input-field">
-                        <input type="password" name="password" placeholder="Confirm password" class="password" required>
+                        <input type="password" name="password" placeholder="Bekreft password" class="password" required>
                         <i class='bx bx-hide eye-icon'></i>
                     </div>
                     <div class="field button-field">
@@ -126,20 +126,20 @@
                     </div>
                 </form>
                 <div class="form-link">
-                    <span>Already have an account? <a href="#" class="link login-link">Login</a></span>
+                    <span>Har du allerede konto? <a href="#" class="link login-link">Login</a></span>
                 </div>
             </div>
             <div class="line"></div>
             <div class="media-options">
                 <a href="#" class="field facebook">
                     <i class='bx bxl-facebook facebook-icon'></i>
-                    <span>Login with Facebook</span>
+                    <span>Login med Facebook</span>
                 </a>
             </div>
             <div class="media-options">
                 <a href="#" class="field google">
                     <img src="../images/google-img.png" alt="" class="google-img">
-                    <span>Login with Google</span>
+                    <span>Login med Google</span>
                 </a>
             </div>
         </div>

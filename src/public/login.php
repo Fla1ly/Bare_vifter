@@ -25,10 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['user_id'] = $user['CustomerID'];
         $_SESSION['user_name'] = $user['FirstName'];
 
-        header("Location: index.php");
+        header("Location: user.php");
         exit();
     } else {
-        echo "Invalid email or password";
+        echo "Feil email eller passord!";
     }
 }
 

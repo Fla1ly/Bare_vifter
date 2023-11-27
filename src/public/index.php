@@ -1,12 +1,5 @@
 <?php
 session_start();
-
-if (isset($_SESSION['user_id'])) {
-    $user_name = $_SESSION['user_name'];
-} else {
-    header("Location: registration.php");
-    exit();
-}
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +19,7 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 
-<body>
+<body class="index-body">
     <nav>
         <a href="index.php" class="logo"><svg fill="#000000" height="50px" width="50px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 300" xml:space="preserve">
                 <g>
@@ -68,30 +61,34 @@ if (isset($_SESSION['user_id'])) {
             <li><a href="contact.html">Kontakt Oss</a></li>
         </ul>
         <div class="nav-icon-container">
-            <form action="logout.php" method="post">
-                <button type="submit">Logout</button>
-                <ion-icon href="user.html" name="person-circle-outline" onlick="redirectUser()" id="btn-userpage" size="large"></ion-icon>
-                <ion-icon hrer="cart.html" name="cart-outline" onclick="redirectCart()" id="btn-cart" size="large"></ion-icon>
-            </form>
+            <?php
+            if (isset($_SESSION['user_id'])) {
+                echo '<form action="logout.php" method="post">
+                        <button type="submit">Logout</button>
+                      </form>';
+            } else {
+                echo '<p></p>';
+            }
+            ?>
+            <ion-icon href="user.html" name="person-circle-outline" onlick="redirectUser()" id="btn-userpage" size="large"></ion-icon>
+            <ion-icon hrer="cart.html" name="cart-outline" onclick="redirectCart()" id="btn-cart" size="large"></ion-icon>
         </div>
         <div class="bx bx-menu" id="menu-icon" onlick="test()"></div>
     </nav>
-      <!-- index content -->
-      <div class="main-head" data-aos="fade-down" data-aos-duration="1000" data-aos-easing="ease-in-out"
-        data-aos-once="true">
+    <!-- index content -->
+    <div class="main-head" data-aos="fade-down" data-aos-duration="1000" data-aos-easing="ease-in-out" data-aos-once="true">
         <div class="index-container">
             <div class="index-row">
                 <div class="index-content">
-                    <h4>Welcome to Visiple</h4>
+                    <h4>Velkommen til Bare Vifter</h4>
                     <div class="divider"></div>
                     <div class="index-txt-wrapper">
-                        <h1>Where Remote Work Meets</h1>
-                        <h1>Freedom</h1>
+                        <h1>Beste stedet for å kjøpe</h1>
+                        <h1>Vifter</h1>
                     </div>
                     <div class="index-buttons-parent">
-                        <a href="signup.html" class="btn btn-primary btn-lg btn-media">Sign up</a>
-                        <a href="about.html" class="btn btn-primary btn-lg btn-media">Learn More <i
-                                class="ri-arrow-drop-right-line"></i></button></a>
+                        <a href="registration.php" class="btn btn-primary btn-lg btn-media">Login</a>
+                        <a href="produkter.php" class="btn btn-primary btn-lg btn-media">Se produkter<i class="ri-arrow-drop-right-line"></i></button></a>
                     </div>
                 </div>
             </div>
@@ -99,22 +96,18 @@ if (isset($_SESSION['user_id'])) {
     </div>
     <footer>
         <ul class="footer-ulist">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="whyus.html">Services</a></li>
-            <li><a href="pdf/Visiple - Terms & Conditions.pdf">Terms & Conditions</a></li>
+            <li><a href="index.php">Hjem</a></li>
+            <li><a href="develop.html">Om oss</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
             <li><a href="contact.html">Support</a></li>
         </ul>
         <div class="footer-icons">
-            <a href="https://twitter.com/Visiple_"><i class="ri-twitter-fill"></i></a>
-            <a href="https://www.facebook.com/visiple/"><i class="ri-facebook-fill"></i></a>
-            <a href="https://www.instagram.com/visiple_/"><i class="ri-instagram-line"></i></a>
-            <a href="https://www.linkedin.com/company/visiple"><i class="ri-linkedin-fill"></i></a>
+            <a href="#"><i class="ri-twitter-fill"></i></a>
+            <a href="#"><i class="ri-facebook-fill"></i></a>
+            <a href="#"><i class="ri-instagram-line"></i></a>
+            <a href="#"><i class="ri-linkedin-fill"></i></a>
         </div>
     </footer>
-    <div class="index-view-more">
-        <a href="produkter.html"><button>Vis mer produkter</button></a>
-    </div>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         AOS.init();

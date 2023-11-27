@@ -1,8 +1,61 @@
 <?php
 session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+function addToCart($Name, $qty)
+{
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = array();
+    }
+
+    if (isset($_SESSION['cart'][$Name])) {
+        $_SESSION['cart'][$Name] += $qty;
+    } else {
+        $_SESSION['cart'][$Name] = $qty;
+    }
+}
+
+// Array with all 12 products
+$products = array(
+    "Gulvvifte Svart" => array("image" => "images/fan2.png", "price" => 350),
+    "Gulvvifte Silver" => array("image" => "images/fan.png", "price" => 259),
+    "Bordvifte 230mm Svart" => array("image" => "images/fan3.png", "price" => 289),
+    "Bordvifte USB 18CM" => array("image" => "images/fan4.png", "price" => 89),
+    "Mi Smart Standing Fan 2 - Gulvvifte" => array("image" => "images/fan5.png", "price" => 899),
+    "Gulvvifte 400mm - Metal" => array("image" => "images/fan6.png", "price" => 899),
+    "Gulvvifte 400mm - Lav støy - Hvit" => array("image" => "images/fan7.png", "price" => 849),
+    "Gulvvifte 400mm - Lav støy - Sort" => array("image" => "images/fan8.png", "price" => 989),
+    "FT-775 Trådløs USB-vifte - Hvit" => array("image" => "images/fan9.png", "price" => 499),
+    "FT-771 Trådløs Bærbar bordvifte - Hvit" => array("image" => "images/fan10.png", "price" => 249),
+    "Bordvifte 230mm Hvit" => array("image" => "images/fan.png", "price" => 199),
+    "GXT 278 Notebook Cooling Stand" => array("image" => "images/fan12.png", "price" => 339)
+);
+
+if (isset($_GET['remove']) && !empty($_GET['remove'])) {
+    $removeProduct = $_GET['remove'];
+    if (isset($_SESSION['cart'][$removeProduct])) {
+        unset($_SESSION['cart'][$removeProduct]);
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit;
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    foreach ($_POST['quantity'] as $productName => $newQuantity) {
+        $newQuantity = intval($newQuantity);
+        if ($newQuantity > 0) {
+            $_SESSION['cart'][$productName] = $newQuantity;
+        } else {
+            unset($_SESSION['cart'][$productName]);
+        }
+    }
+}
+
+function displayQuantityForm($productName, $quantity)
+{
+    echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+    echo '<input type="number" name="quantity[' . $productName . ']" value="' . $quantity . '" min="1">';
+    echo '<input type="submit" value="Oppdater">';
+    echo '</form>';
+}
 ?>
 
 
@@ -14,6 +67,12 @@ error_reporting(E_ALL);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Handlekurv</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
         .product {
             border: 1px solid #ddd;
@@ -72,30 +131,79 @@ error_reporting(E_ALL);
                 <li><a href="contact.html">Kontakt Oss</a></li>
             </ul>
             <div class="nav-icon-container">
+                <?php
+                if (isset($_SESSION['user_id'])) {
+                    echo '<form action="logout.php" method="post">
+                        <button type="submit">Logg ut</button>
+                      </form>';
+                } else {
+                    echo '<p></p>';
+                }
+                ?>
                 <ion-icon href="user.html" name="person-circle-outline" onlick="redirectUser()" id="btn-userpage" size="large"></ion-icon>
-                <ion-icon href="cart.php" name="cart-outline" onclick="redirectCart()" id="btn-cart" size="large"></ion-icon>
+                <ion-icon hrer="cart.html" name="cart-outline" onclick="redirectCart()" id="btn-cart" size="large"></ion-icon>
             </div>
             <div class="bx bx-menu" id="menu-icon" onlick="test()"></div>
         </nav>
     </nav>
 
     <div class="cart-container">
-        <h2>Handlekurv</h2>
         <h1>Handlekurv</h1>
-
         <?php
-        
         if (!empty($_SESSION['cart'])) {
-            foreach ($_SESSION['cart'] as $Name => $qty) {
-                echo "Produkt: $Name, Quantity: $qty<br>";
+            echo '<table>
+        <tr>
+            <th>Bilde</th>
+            <th>Navn</th>
+            <th>Pris</th>
+            <th>Antall</th>
+            <th>Endre antall</th>
+            <th>Subtotal</th>
+            <th>Fjern</th>
+        </tr>';
+
+            $totalPrice = 0;
+
+            foreach ($_SESSION['cart'] as $productName => $quantity) {
+                echo '<tr>';
+                echo '<td><img src="' . $products[$productName]['image'] . '" alt="' . $productName . '" class="cart-image"></td>';
+                echo '<td><span class="product-name">' . $productName . '</span></td>';
+                echo '<td>' . $products[$productName]['price'] . 'kr</td>';
+                echo '<td>' . $quantity . '</td>';
+                echo '<td>';
+                echo '<form class="cart-quantity-form" method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+                echo '<input type="number" name="quantity[' . $productName . ']" value="' . $quantity . '" min="1">';
+                echo '<input type="submit" value="Oppdater">';
+                echo '</form>';
+                echo '</td>';
+                echo '<td>' . ($products[$productName]['price'] * $quantity) . 'kr</td>';
+                echo '<td><a href="?remove=' . $productName . '">Fjern</a></td>';
+                echo '</tr>';
+
+                $totalPrice += $products[$productName]['price'] * $quantity;
             }
+
+            echo '<tr>
+                <td colspan="5" style="text-align: right;">Total:</td>
+                <td colspan="2">' . $totalPrice . 'kr</td>
+                </tr>';
+            echo '</table>';
+            echo '<div style="text-align: right; margin-top: 10px;">
+    <strong>Total:</strong> ' . $totalPrice . 'kr
+    <br>
+    <form class="form-buy" action="reciept.php" method="post">
+        <input type="hidden" name="totalPrice" value="' . $totalPrice . '">
+        <input class="input-buy" type="submit" value="kjøp">
+    </form>
+    </div>';
         } else {
-            echo "Cart is empty";
+            echo '<p>Handlekurven er tom.</p>';
         }
         ?>
-        <a href="checkout.php">Gå til kassen</a>
     </div>
-
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://unpkg.com/ionicons@latest/dist/ionicons.js"></script>
+    <script src="../js/script.js"></script>
     <script src="../js/cart.js"></script>
 </body>
 

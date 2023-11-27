@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+    $user_name = $_SESSION['user_name'];
+    $welcomeMessage = "Velkommen, $user_name! Det er din bruker side.";
+    $displayButton = false;
+} else {
+    $welcomeMessage = "Du er ikke registrert eller logget inn.";
+    $displayButton = true;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,25 +69,41 @@
             <li><a href="contact.html">Kontakt Oss</a></li>
         </ul>
         <div class="nav-icon-container">
-            <form action="logout.php" method="post">
-                <button type="submit">Logout</button>
-                <ion-icon href="user.html" name="person-circle-outline" onlick="redirectUser()" id="btn-userpage" size="large"></ion-icon>
-                <ion-icon hrer="cart.html" name="cart-outline" onclick="redirectCart()" id="btn-cart" size="large"></ion-icon>
-            </form>
+            <?php
+            if (isset($_SESSION['user_id'])) {
+                echo '<form action="logout.php" method="post">
+                        <button type="submit">Logg ut</button>
+                      </form>';
+            } else {
+                echo '<p></p>';
+            }
+            ?>
+            <ion-icon href="user.html" name="person-circle-outline" onlick="redirectUser()" id="btn-userpage" size="large"></ion-icon>
+            <ion-icon hrer="cart.html" name="cart-outline" onclick="redirectCart()" id="btn-cart" size="large"></ion-icon>
         </div>
         <div class="bx bx-menu" id="menu-icon" onlick="test()"></div>
     </nav>
     <div class="user-main-parent">
         <div class="user-main-child">
             <div class="user-main-txt">
-                <h1>You are not registered or loggen in yet.</h1>
-                <h2>Register here!</h2>
+                <h1><?php echo $welcomeMessage; ?></h1>
+                <?php if ($displayButton) { ?>
+                    <h2>Register here!</h2>
+                <?php } ?>
             </div>
             <div class="divider"></div>
+            <?php if (!$displayButton) { ?>
+                <div class="index-buttons-parent">
+                    <a href="produkter.php" class="btn btn-primary btn-lg btn-media">Se produkter<i class="ri-arrow-drop-right-line"></i></button></a>
+                    <a href="cart.php" class="btn btn-primary btn-lg btn-user">Se Handlekurv</a>
+                </div>
+            <?php } ?>
             <br>
-            <div class="user-button-parent">
-                <a href="registration.php" class="btn btn-primary btn-lg btn-user">Login or Signup</a>
-            </div>
+            <?php if ($displayButton) { ?>
+                <div class="user-button-parent">
+                    <a href="registration.php" class="btn btn-primary btn-lg btn-user">Login eller registrer ny bruker</a>
+                </div>
+            <?php } ?>
         </div>
     </div>
     <script src="./script.js"></script>

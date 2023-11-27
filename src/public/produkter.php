@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -77,15 +76,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </svg></a>
         <ul class="nav-ulist">
             <li><a href="index.php">Hjem</a></li>
-            <li><a href="produkter.html">Produkter</a></li>
+            <li><a href="produkter.php">Produkter</a></li>
             <li><a href="contact.html">Kontakt Oss</a></li>
         </ul>
         <div class="nav-icon-container">
-            <form action="logout.php" method="post">
-                <button type="submit">Logout</button>
-                <ion-icon href="user.html" name="person-circle-outline" onlick="redirectUser()" id="btn-userpage" size="large"></ion-icon>
-                <ion-icon hrer="cart.html" name="cart-outline" onclick="redirectCart()" id="btn-cart" size="large"></ion-icon>
-            </form>
+            <?php
+            if (isset($_SESSION['user_id'])) {
+                echo '<form action="logout.php" method="post">
+                        <button type="submit">Logg ut</button>
+                      </form>';
+            } else {
+                echo '<p></p>';
+            }
+            ?>
+            <ion-icon href="user.html" name="person-circle-outline" onlick="redirectUser()" id="btn-userpage" size="large"></ion-icon>
+            <ion-icon hrer="cart.html" name="cart-outline" onclick="redirectCart()" id="btn-cart" size="large"></ion-icon>
         </div>
         <div class="bx bx-menu" id="menu-icon" onlick="test()"></div>
     </nav>
@@ -116,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <option value="9">9</option>
                             <option value="10">10</option>
                         </select>
-                        <button type="button" class="btn">Legg til i handlekurv</button>
+                        <button type="submit" class="btn">Legg til i handlekurv</button>
                     </form>
                 </div>
                 <div class="product-card">

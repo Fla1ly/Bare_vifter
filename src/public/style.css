@@ -31,6 +31,22 @@ body {
     align-items: center;
 }
 
+.index-body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-position-y: -50px;
+    background-size: cover;
+    background-image: url(images/background1.jpg);
+    background-repeat: no-repeat;
+}
+
+.user-body {
+    background-image: url(images/background1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 /* navbar */
 
 nav {
@@ -56,11 +72,28 @@ nav svg {
 .nav-icon-container {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     gap: 10px;
 }
 
 .nav-icon-container ion-icon {
     cursor: pointer;
+}
+
+.nav-icon-container button {
+    background-color: #000;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: auto;
+}
+
+.nav-icon-container form {
+    display: flex;
+    align-items: center;
+    margin: 0;
 }
 
 .nav-ulist {
@@ -117,6 +150,62 @@ nav svg {
     cursor: pointer;
     display: none;
 }
+
+
+/* footer */
+
+footer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: auto;
+    margin-bottom: 0.25%;
+}
+
+footer i {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.644);
+    transition: all .4s ease-in-out;
+}
+
+footer i:hover {
+    color: #fff;
+}
+
+.footer-ulist {
+    display: flex;
+    list-style: none;
+}
+
+.footer-ulist a {
+    color: rgba(255, 255, 255, 0.644);
+    font-size: 13px;
+    margin-left: 35px;
+    transition: all .55s ease-in-out;
+}
+
+.footer-ulist a:hover {
+    color: #fff;
+}
+
+.footer-icons {
+    color: white;
+    margin-left: 1%;
+    display: flex;
+    justify-content: space-evenly;
+    width: 5%;
+}
+
+.about-footer-background {
+    margin-top: auto;
+    background-color: #1f283b;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 /* index */
 
@@ -201,30 +290,18 @@ nav svg {
 }
 
 
+/* Products page */
 
-.index-view-more {
-    margin-top: 2%;
+.index-header {
     display: flex;
     width: 100%;
     justify-content: center;
-    align-content: center;
+    align-items: center;
 }
 
-.index-view-more button {
-    background-color: #000;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.index-header h1 {
+    margin-right: 2%;
 }
-
-.index-view-more button:hover {
-    background-color: #333;
-}
-
-
-/* Products page */
 
 .product-main {
     width: 80%;
@@ -290,12 +367,6 @@ nav svg {
 
 
 /* User */
-
-.user-body {
-    background-image: url(../images/background1.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-}
 
 .user-main-parent {
     width: 100%;
@@ -801,4 +872,103 @@ a.google span {
     background: #000000;
     color: #fff;
     border-color: #000000;
+}
+
+
+/* cart page */
+
+.cart-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart-container h1 {
+    font-size: 50px;
+}
+
+.cart-container h2 {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.cart-container button {
+    background-color: #000;
+    font-size: 25px;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cart-image {
+    max-width: 80px;
+}
+
+.product-name {
+    font-size: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    width: auto;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.cart-quantity-form {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.cart-quantity-form input[type="number"] {
+    width: 50px;
+    padding: 8px;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.cart-quantity-form input[type="submit"] {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: auto;
+}
+
+.cart-quantity-form input[type="submit"]:hover {
+    background-color: #333;
+}
+
+.input-buy {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: auto;
+}
+
+.input-buy:hover {
+    background-color: #333;
 }
